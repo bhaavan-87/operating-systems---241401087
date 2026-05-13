@@ -1,42 +1,48 @@
 
-# Experiment 10: Page Replacement Algorithm
+#include<stdio.h>
 
-## Aim
-To implement FIFO and LRU page replacement algorithms.
+int main()
+{
+    int pages[50], frame[10];
+    int n, f, i, j, k = 0;
+    int faults = 0, flag;
 
-## Algorithm
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
 
-### FIFO
-1. Read page reference string.
-2. Read number of frames.
-3. Replace the oldest page when frame becomes full.
-4. Count page faults.
+    printf("Enter page reference string:\n");
 
-### LRU
-1. Read page reference string.
-2. Read number of frames.
-3. Replace the least recently used page.
-4. Count page faults.
+    for(i = 0; i < n; i++)
+        scanf("%d", &pages[i]);
 
-## Programs
-- fifo.c
-- lru.c
+    printf("Enter number of frames: ");
+    scanf("%d", &f);
 
-## Sample Input
-Number of pages: 12
+    for(i = 0; i < f; i++)
+        frame[i] = -1;
 
-Reference String:
-1 2 3 4 1 2 5 1 2 3 4 5
+    for(i = 0; i < n; i++)
+    {
+        flag = 0;
 
-Number of frames: 3
+        for(j = 0; j < f; j++)
+        {
+            if(frame[j] == pages[i])
+            {
+                flag = 1;
+                break;
+            }
+        }
 
-## Sample Output
+        if(flag == 0)
+        {
+            frame[k] = pages[i];
+            k = (k + 1) % f;
+            faults++;
+        }
+    }
 
-FIFO:
-Total Page Faults = 9
+    printf("Total Page Faults = %d\n", faults);
 
-LRU:
-Total Page Faults = 10
-
-## Output Screenshots
-Available in screenshots folder.
+    return 0;
+}
